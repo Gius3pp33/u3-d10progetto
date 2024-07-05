@@ -65,8 +65,8 @@ function RainChart({ city, apiKey }) {
                 <div key={index} className="mx-3 text-center">
                   <div className="mb-2" style={{ height: `${bar.rain}%`, backgroundColor: bar.rain > 0 ? 'blue' : 'lightgrey', width: '20px' }}></div>
                   <div style={{ fontSize: '15px', marginTop: '8px' }}>
+                  <div>{bar.rain > 0 ? `${bar.rain}%` : `${bar.pop}%`}</div>
                     <div>{bar.time}</div>
-                    <div>{bar.rain > 0 ? `${bar.rain}%` : `${bar.pop}%`}</div>
                   </div>
                 </div>
               ))}
