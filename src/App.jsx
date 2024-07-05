@@ -11,6 +11,7 @@ import Welcome from './components/Welcome';
 import CityCards from './components/CityCards';
 import Footer from './components/Footer';
 import './App.css';
+import NotFound from './components/NotFound';
 
 const API_KEY = '1e3b33eb0c23931c8d2c3a6ad26d0a97';
 const BackIcon = (
@@ -27,14 +28,14 @@ const BackIcon = (
 );
 
 function App() {
-  const [city, setCity] = useState(''); 
+  const [city, setCity] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showBackIcon, setShowBackIcon] = useState(false);
 
   const fetchWeatherData = async (city) => {
-    if (!city) return; 
+    if (!city) return;
 
     setLoading(true);
     setError(null);
@@ -62,12 +63,12 @@ function App() {
 
   const handleSearchBarChange = (inputValue) => {
     setCity(inputValue);
-    setShowBackIcon(false); 
+    setShowBackIcon(false);
   };
 
   const handleSearchBarSubmit = (inputValue) => {
     setCity(inputValue);
-    setShowBackIcon(false); 
+    setShowBackIcon(false);
   };
 
   return (
@@ -100,6 +101,8 @@ function App() {
               </>
             }
           />
+         
+         <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </div>
