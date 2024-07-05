@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
-const API_KEY = 'bqbDmfF5WJdMwepNzuuMZDtQwz7gNpcoPue08l2GAkJSKpsOcE05Jqn4';
+
 
 function RainChart({ city, apiKey }) {
   const [rainData, setRainData] = useState([]);
@@ -41,7 +41,7 @@ function RainChart({ city, apiKey }) {
       grouped[dayKey].push({
         time: `${hours}:${minutes}`,
         rain: item.rain ? item.rain['3h'] : 0,
-        pop: item.pop * 100, // Converti la probabilità di precipitazioni in percentuale
+        pop: item.pop * 100, // Converte la probabilità di precipitazioni in percentuale
       });
     });
 
