@@ -55,7 +55,7 @@ function RainChart({ city, apiKey }) {
 
   return (
     <Container fluid className="rain-chart">
-      <h3 className="text-center">Possibilità di Pioggia</h3>
+      <h3 className="text-center">Probabilità di Pioggia</h3>
       {Object.keys(rainData).map((day) => (
         <Row key={day} className="mb-4">
           <Col>
