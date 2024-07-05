@@ -23,7 +23,7 @@ function SearchBar({ setCity }) {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Cerca città..."
+            placeholder="Cerca una città..."
           />
         </Form.Group>
         <Button type="submit" className="bg-transparent border-secondary ">
