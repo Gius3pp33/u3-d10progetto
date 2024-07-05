@@ -31,7 +31,7 @@ const CityCard = ({ city }) => {
   }
 
   if (!weatherData) {
-    return null; // Puoi anche mostrare un messaggio di errore qui
+    return null; 
   }
 
   const weatherIconUrl = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
