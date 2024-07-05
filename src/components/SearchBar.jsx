@@ -10,6 +10,7 @@ function SearchBar({ setCity }) {
     e.preventDefault();
     setCity(input);
     navigate('/weather');
+    setInput('');
   };
 
   return (
