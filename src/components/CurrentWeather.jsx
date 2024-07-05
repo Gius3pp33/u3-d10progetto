@@ -32,13 +32,13 @@ function CurrentWeather({ data }) {
       <Row>
         <Col md={6} className="order-md-1 order-2">
           <div className="weather-details">
-            <h2>{data.name}</h2>
-            <p>Temperatura: {main.temp}°C</p>
-            <p>Condizioni: {weather[0].description}</p>
-            <p>Vento: {wind.speed} km/h</p>
-            <p>Umidità: {main.humidity}%</p>
-            <p>Alba: {new Date(sys.sunrise * 1000).toLocaleTimeString()}</p>
-            <p>Tramonto: {new Date(sys.sunset * 1000).toLocaleTimeString()}</p>
+            <h2 className='mb-5 '>{data.name}</h2>
+            <h4 className='mb-3 lead'>Temperatura: {main.temp}°C</h4>
+            <h4 className='mb-3 lead'>Condizioni: {weather[0].description}</h4>
+            <h4 className='mb-3 lead'>Vento: {wind.speed} km/h</h4>
+            <h4 className='mb-3 lead'>Umidità: {main.humidity}%</h4>
+            <h4 className='mb-3 lead'>Alba: {new Date(sys.sunrise * 1000).toLocaleTimeString()}</h4>
+            <h4 className='lead'>Tramonto: {new Date(sys.sunset * 1000).toLocaleTimeString()}</h4>
           </div>
         </Col>
         <Col md={6} className="order-md-2 order-1">
