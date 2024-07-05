@@ -25,7 +25,7 @@ function SearchBar({ setCity }) {
             placeholder="Cerca città..."
           />
         </Form.Group>
-        <Button type="submit" size='sm' className="bg-secondary border-secondary ">
+        <Button type="submit" className="bg-transparent border-secondary ">
           Cerca
         </Button>
       </Form>

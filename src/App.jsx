@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import CurrentWeather from './components/CurrentWeather';
 import Forecast from './components/Forecast';
@@ -13,14 +13,27 @@ import Footer from './components/Footer';
 import './App.css';
 
 const API_KEY = '1e3b33eb0c23931c8d2c3a6ad26d0a97';
-
+const BackIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    fill="white"
+    className="bi bi-arrow-left"
+    width={'40px'}
+    height={'40px'}
+  >
+    <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+  </svg>
+);
 function App() {
-  const [city, setCity] = useState('Catania');
+  const [city, setCity] = useState(''); 
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchWeatherData = async (city) => {
+    if (!city) return; 
+
     setLoading(true);
     setError(null);
     try {
@@ -39,24 +52,31 @@ function App() {
   };
 
   useEffect(() => {
-    fetchWeatherData(city);
+    if (city) {
+      fetchWeatherData(city);
+    }
   }, [city]);
-
   return (
     <Router>
       <div className="app">
         <Welcome timeout={5000} />
         <SearchBar setCity={setCity} />
         <Routes>
-          <Route path="/" element={<CityCards />} />
+          
           <Route
             path="/weather"
             element={
               <>
+               <div className="mb-3">
+                  <Link to="/" className="btn btn-transparent text-white  mb-4">
+                  {BackIcon}
+                  </Link>
+                </div>
                 {loading && <Loading />}
                 {error && <Error message={error} />}
                 {weatherData && (
                   <>
+                    <CityCards />
                     <CurrentWeather data={weatherData} />
                     <Forecast city={city} apiKey={API_KEY} />
                     <RainChart city={city} apiKey={API_KEY} />
