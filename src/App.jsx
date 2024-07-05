@@ -25,11 +25,13 @@ const BackIcon = (
     <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
   </svg>
 );
+
 function App() {
   const [city, setCity] = useState(''); 
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showBackIcon, setShowBackIcon] = useState(false);
 
   const fetchWeatherData = async (city) => {
     if (!city) return; 
@@ -41,6 +43,7 @@ function App() {
       const data = await response.json();
       if (response.ok) {
         setWeatherData(data);
+        setShowBackIcon(true);
       } else {
         setError(data.message);
       }
@@ -56,21 +59,33 @@ function App() {
       fetchWeatherData(city);
     }
   }, [city]);
+
+  const handleSearchBarChange = (inputValue) => {
+    setCity(inputValue);
+    setShowBackIcon(false); 
+  };
+
+  const handleSearchBarSubmit = (inputValue) => {
+    setCity(inputValue);
+    setShowBackIcon(false); 
+  };
+
   return (
     <Router>
       <div className="app">
         <Welcome timeout={5000} />
-        <SearchBar setCity={setCity} />
+        <SearchBar setCity={handleSearchBarChange} onSearch={handleSearchBarSubmit} />
         <Routes>
-          
           <Route
             path="/weather"
             element={
               <>
-               <div className="mb-3">
-                  <Link to="/" className="btn btn-transparent text-white  mb-4">
-                  {BackIcon}
-                  </Link>
+                <div className="mb-3">
+                  {showBackIcon && (
+                    <Link to="/" className="btn btn-transparent text-white mb-4">
+                      {BackIcon}
+                    </Link>
+                  )}
                 </div>
                 {loading && <Loading />}
                 {error && <Error message={error} />}

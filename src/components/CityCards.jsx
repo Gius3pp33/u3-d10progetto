@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Loading from './Loading'; // Assicurati che il percorso sia corretto
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Card, Carousel, Col, Container, Row } from 'react-bootstrap';
 import '../components/CityCards.css';
 
 const API_KEY = '1e3b33eb0c23931c8d2c3a6ad26d0a97';
@@ -51,17 +51,39 @@ const CityCard = ({ city }) => {
 };
 
 const CityCards = () => {
-  const cities = ['London', 'Paris', 'New York', 'Tokyo', 'Sydney'];
+  const cities = [
+    'London', 'Paris', 'New York', 'Tokyo', 'Sydney', 'Catania', 'Roma', 'Lisbona', 'Oslo', 'Berlino', 'Marocco',
+    'Madrid', 'Amsterdam', 'Vienna', 'Dubai', 'Moscow', 'Seoul', 'Beijing', 'Bangkok', 'Singapore', 'Hong Kong',
+    'Los Angeles', 'San Francisco', 'Toronto', 'Vancouver', 'Montreal', 'Mexico City', 'Buenos Aires', 'Rio de Janeiro',
+    'Sao Paulo', 'Cairo', 'Johannesburg', 'Cape Town', 'Dublin', 'Brussels', 'Zurich', 'Stockholm', 'Warsaw', 'Prague',
+    'Budapest', 'Athens', 'Rome', 'Milan', 'Munich', 'Berlin', 'Helsinki', 'Oslo', 'Copenhagen', 'Lisbon'
+  ];
+
+
+  const itemsPerSlide = 4; 
+
+  const getSlides = () => {
+    const slides = [];
+    for (let i = 0; i < cities.length; i += itemsPerSlide) {
+      slides.push(
+        <Carousel.Item key={i}>
+          <Row className="justify-content-around">
+            {cities.slice(i, i + itemsPerSlide).map((city, index) => (
+              <CityCard key={index} city={city} />
+            ))}
+          </Row>
+        </Carousel.Item>
+      );
+    }
+    return slides;
+  };
 
   return (
     <Container fluid className="city-cards">
-      <Row className="justify-content-around">
-        {cities.map((city, index) => (
-          <CityCard key={index} city={city} />
-        ))}
-      </Row>
+      <Carousel indicators={false} controls={false} >
+        {getSlides()}
+      </Carousel>
     </Container>
   );
 };
-
 export default CityCards;
