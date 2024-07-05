@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
-const API_KEY = 'bqbDmfF5WJdMwepNzuuMZDtQwz7gNpcoPue08l2GAkJSKpsOcE05Jqn4';
+
 
 function Forecast({ city, apiKey }) {
   const [forecastData, setForecastData] = useState([]); // State per memorizzare i dati delle previsioni
