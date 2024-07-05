@@ -54,27 +54,27 @@ function RainChart({ city, apiKey }) {
   };
 
   return (
-    <Container fluid className="rain-chart">
-      <h3 className="text-center">Probabilità di Pioggia</h3>
-      {Object.keys(rainData).map((day) => (
-        <Row key={day} className="mb-4">
-          <Col>
-            <h4>{day}</h4>
-            <div className="d-flex justify-content-start">
-              {rainData[day].map((bar, index) => (
-                <div key={index} className="mx-3 text-center">
-                  <div className="mb-2" style={{ height: `${bar.rain}%`, backgroundColor: bar.rain > 0 ? 'blue' : 'lightgrey', width: '20px' }}></div>
-                  <div style={{ fontSize: '15px', marginTop: '8px' }}>
+    <Container  className="rain-chart lead d-none d-sm-block " style={{ maxWidth: '500px' }}>
+    <h3 className="text-center">Probabilità di Pioggia🌧</h3>
+    {Object.keys(rainData).map((day) => (
+      <Row key={day} className="mb-4">
+        <Col className='d-none d-sm-inline' md={12} lg={12}>
+          <h4>{day}</h4>
+          <div className="d-flex justify-content-start">
+            {rainData[day].map((bar, index) => (
+              <div key={index} className="mx-3 text-center" style={{ width: 'calc(100% / 24)' }}>
+                <div className="mb-2" style={{ height: `${bar.rain}%`, backgroundColor: bar.rain > 0 ? 'blue' : 'lightgrey' }}></div>
+                <div style={{ fontSize: '15px', marginTop: '8px' }}>
                   <div>{bar.rain > 0 ? `${bar.rain}%` : `${bar.pop}%`}</div>
-                    <div>{bar.time}</div>
-                  </div>
+                  <div>{bar.time}</div>
                 </div>
-              ))}
-            </div>
-          </Col>
-        </Row>
-      ))}
-    </Container>
+              </div>
+            ))}
+          </div>
+        </Col>
+      </Row>
+    ))}
+  </Container>
   );
 }
 
