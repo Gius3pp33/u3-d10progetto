@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 
 function CurrentWeather({ data }) {
   const { main, weather, wind, sys } = data;
@@ -19,7 +20,7 @@ function CurrentWeather({ data }) {
           console.log('Nessuna immagine trovata per la città');
         }
       } catch (error) {
-        console.error('Errore durante il recupero dell\'immagine:', error);
+        console.log('Errore durante il recupero dell\'immagine:', error);
       }
     };
 
@@ -27,18 +28,24 @@ function CurrentWeather({ data }) {
   }, [data.name]);
 
   return (
-    <div className="current-weather">
-      <div className="weather-details">
-        <h2>{data.name}</h2>
-        <p>Temperatura: {main.temp}°C</p>
-        <p>Condizioni: {weather[0].description}</p>
-        <p>Vento: {wind.speed} km/h</p>
-        <p>Umidità: {main.humidity}%</p>
-        <p>Alba: {new Date(sys.sunrise * 1000).toLocaleTimeString()}</p>
-        <p>Tramonto: {new Date(sys.sunset * 1000).toLocaleTimeString()}</p>
-      </div>
-      {cityImage && <img src={cityImage} alt="Immagine della città" className="city-image" />}
-    </div>
+    <Container fluid className="current-weather">
+      <Row>
+        <Col md={6} className="order-md-1 order-2">
+          <div className="weather-details">
+            <h2>{data.name}</h2>
+            <p>Temperatura: {main.temp}°C</p>
+            <p>Condizioni: {weather[0].description}</p>
+            <p>Vento: {wind.speed} km/h</p>
+            <p>Umidità: {main.humidity}%</p>
+            <p>Alba: {new Date(sys.sunrise * 1000).toLocaleTimeString()}</p>
+            <p>Tramonto: {new Date(sys.sunset * 1000).toLocaleTimeString()}</p>
+          </div>
+        </Col>
+        <Col md={6} className="order-md-2 order-1">
+          {cityImage && <img src={cityImage} alt="Immagine della città cercata" className="city-image img-fluid" />}
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

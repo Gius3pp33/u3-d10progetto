@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const API_KEY = 'bqbDmfF5WJdMwepNzuuMZDtQwz7gNpcoPue08l2GAkJSKpsOcE05Jqn4';
 
 function Forecast({ city, apiKey }) {
-  const [forecastData, setForecastData] = useState([]);
-
+  const [forecastData, setForecastData] = useState([]); // State per memorizzare i dati delle previsioni
+  // useEffect per gestire la fetch dei dati delle previsioni
   useEffect(() => {
     const fetchForecastData = async () => {
       try {
@@ -12,13 +13,14 @@ function Forecast({ city, apiKey }) {
         const data = await response.json();
         setForecastData(data.list);
       } catch (error) {
-        console.error(`Errore durante il recupero dei dati: ${error.message}`);
+        console.log(`Errore durante il recupero dei dati: ${error.message}`);
       }
     };
 
-    fetchForecastData();
+    fetchForecastData(); // Chiamo la funzione fetchForecastData al caricamento del componente o quando cambiano city o apiKey
   }, [city, apiKey]);
 
+   // Funzione per ottenere l'URL dell'icona del meteo
   const getWeatherIconUrl = (iconCode) => {
     return `https://openweathermap.org/img/wn/${iconCode}.png`;
   };
@@ -27,29 +29,36 @@ function Forecast({ city, apiKey }) {
   const groupForecastByDay = () => {
     const dailyForecasts = {};
     forecastData.forEach((forecast) => {
-      const date = new Date(forecast.dt * 1000).toLocaleDateString();
+      const date = new Date(forecast.dt * 1000).toLocaleDateString(); // ottengo la data locale dalla previsione
       if (!dailyForecasts[date]) {
-        dailyForecasts[date] = forecast;
+        dailyForecasts[date] = forecast; // aggiungo la previsione al gruppo per quella data
       }
     });
-    return Object.values(dailyForecasts);
+    return Object.values(dailyForecasts); // Restituisce le previsioni raggruppate per giorno
+  
   };
 
-  // Ottieni le previsioni raggruppate per giorno
+  // qui ottengo le previsioni raggruppate per giorno
   const dailyForecasts = groupForecastByDay();
 
   return (
-    <div className="forecast">
-      <h3>Previsioni della settimana</h3>
-      {dailyForecasts.map((forecast, index) => (
-        <div key={index} className="forecast-day">
-          <p>{new Date(forecast.dt * 1000).toLocaleDateString()}</p>
-          <img src={getWeatherIconUrl(forecast.weather[0].icon)} alt={forecast.weather[0].description} />
-          <p>Temp: {forecast.main.temp}°C</p>
-          <p>{forecast.weather[0].description}</p>
-        </div>
-      ))}
-    </div>
+    <Container fluid className="forecast">
+      <h3 className=" mt-3 mb-4">Previsioni della settimana</h3>
+      <Row xs={1} md={2} lg={3} className="g-4">
+        {dailyForecasts.map((forecast, index) => (
+          <Col key={index}>
+            <div className="forecast-day card bg-transparent border-0">
+              <div className="card-body text-white text-center">
+                <p className="mb-0">{new Date(forecast.dt * 1000).toLocaleDateString()}</p>
+                <img src={getWeatherIconUrl(forecast.weather[0].icon)} alt={forecast.weather[0].description} className="forecast-icon" />
+                <p className="mb-1">Temp. media di: {forecast.main.temp}°C</p>
+                <p className="mb-0">{forecast.weather[0].description}</p>
+              </div>
+            </div>
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 }
 
