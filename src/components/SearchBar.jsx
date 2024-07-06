@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Container, Form, ListGroup, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-const API_KEY = '1e3b33eb0c23931c8d2c3a6ad26d0a97'; 
+const API_KEY = '1e3b33eb0c23931c8d2c3a6ad26d0a97';
 
 function SearchBar({ setCity }) {
   const [input, setInput] = useState('');
@@ -13,20 +13,22 @@ function SearchBar({ setCity }) {
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (input) {
+        console.log(`Fetching suggestions for: ${input}`);
         try {
           const response = await fetch(
             `http://api.openweathermap.org/data/2.5/find?q=${input}&type=like&sort=population&cnt=5&appid=${API_KEY}`
           );
           const data = await response.json();
+          console.log('Suggestions fetched:', data);
           if (data.list) {
             setSuggestions(data.list.map(city => city.name));
             setError('');
           } else {
             setSuggestions([]);
-           
+            setError('Nessuna città trovata');
           }
         } catch (error) {
-          console.error('Errore durante il fetching dei suggerimenti:', error);
+          console.log('Errore durante il fetching dei suggerimenti:', error);
           setSuggestions([]);
           setError('Errore durante il fetching dei suggerimenti');
         }
@@ -39,20 +41,39 @@ function SearchBar({ setCity }) {
     fetchSuggestions();
   }, [input]);
 
-  const handleSubmit = (e) => {
+  const checkCityValidity = async (city) => {
+    console.log(`Controllo validity for city: ${city}`);
+    try {
+      const response = await fetch(
+        `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
+      );
+      const data = await response.json();
+      console.log('City validity checked:', data);
+      return response.ok;
+    } catch (error) {
+      console.error('Errore durante la verifica della città:', error);
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (suggestions.includes(input)) {
+    console.log(`Submitting search for city: ${input}`);
+    if (await checkCityValidity(input)) {
+      console.log(`City ${input} is valid. Proceeding to weather page.`);
       setCity(input);
       navigate('/weather');
       setInput('');
       setSuggestions([]);
       setError('');
     } else {
-      setError('Città non esistente.Digita una città esistente o seleziona una città dalla lista dei suggerimenti.');
+      console.log(`City ${input} is invalid.`);
+      setError('Città non esistente. Inserisci una città corretta o selezionane una dai suggerimenti.');
     }
   };
 
   const handleSuggestionClick = (suggestion) => {
+    console.log(`Suggestion clicked: ${suggestion}`);
     setCity(suggestion);
     navigate('/weather');
     setInput('');
