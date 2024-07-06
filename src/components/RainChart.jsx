@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-
-
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 function RainChart({ city, apiKey }) {
   const [rainData, setRainData] = useState([]);
@@ -54,27 +52,53 @@ function RainChart({ city, apiKey }) {
   };
 
   return (
-    <Container  className="rain-chart lead d-none d-sm-block " style={{ maxWidth: '500px' }}>
-    <h3 className="text-center">Probabilità di Pioggia🌧</h3>
-    {Object.keys(rainData).map((day) => (
-      <Row key={day} className="mb-4">
-        <Col className='d-none d-sm-inline' md={12} lg={12}>
-          <h4>{day}</h4>
-          <div className="d-flex justify-content-start">
-            {rainData[day].map((bar, index) => (
-              <div key={index} className="mx-3 text-center" style={{ width: 'calc(100% / 24)' }}>
-                <div className="mb-2" style={{ height: `${bar.rain}%`, backgroundColor: bar.rain > 0 ? 'blue' : 'lightgrey' }}></div>
-                <div style={{ fontSize: '13px', marginTop: '8px', }}>
-                  <div>{bar.rain > 0 ? `${bar.rain}%` : `${bar.pop}%`}</div>
-                  <div>{bar.time}</div>
+    <Container className="rain-chart lead d-none d-sm-block" style={{ maxWidth: '500px', position: 'relative' }}>
+      <h3 className="text-center">Probabilità di Pioggia🌧</h3>
+    
+      {Object.keys(rainData).map((day) => (
+        <Row key={day} className="mb-4">
+          <Col className="d-none d-sm-inline" md={12} lg={12}>
+            <h4>{day}</h4>
+            <div className="d-flex justify-content-start">
+              {rainData[day].map((bar, index) => (
+                <div key={index} className="mx-3 text-center" style={{ width: 'calc(100% / 24)' }}>
+                  <div className="mb-2" style={{ height: `${bar.rain}%`, backgroundColor: bar.rain > 0 ? 'blue' : 'lightgrey' }}></div>
+                  <div style={{ fontSize: '13px', marginTop: '8px' }}>
+                    <div>{bar.rain > 0 ? `${bar.rain}%` : `${bar.pop}%`}</div>
+                    <div>{bar.time}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </Col>
+        </Row>
+      ))}
+      <Card className="legend-card d-none d-lg-block" style={{
+        position: 'absolute',
+        top: '0px',
+        right: '-300px',
+        width: '250px'
+      }}>
+        <Card.Body style={{ backgroundColor: '#062026', color: 'white', borderRadius: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{ width: '30px', height: '10px', backgroundColor: 'blue', marginRight: '10px' }}></div>
+            <span className='lead' style={{ fontSize: '12px' }}>Indica la densità di pioggia prevista,in base alla percentuale.</span>
           </div>
-        </Col>
-      </Row>
-    ))}
-  </Container>
+        </Card.Body>
+      </Card>
+      <Card className="legend-card d-block d-lg-none" style={{
+        position: 'relative',
+        marginTop: '20px',
+        width: '100%'
+      }}>
+        <Card.Body style={{ backgroundColor: '#062026', color: 'white',  borderRadius: '10px ' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{ width: '30px', height: '10px', backgroundColor: 'blue', marginRight: '10px' }}></div>
+            <span className='lead' style={{ fontSize: '12px' }}>Indica la densità di pioggia prevista,in base alla percentuale.</span>
+          </div>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 
