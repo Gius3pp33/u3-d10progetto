@@ -18,7 +18,7 @@ const BackIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
-    fill="white"
+    fill="#062026"
     className="bi bi-arrow-left"
     width={'40px'}
     height={'40px'}
@@ -74,7 +74,7 @@ function App() {
   return (
     <Router>
       <div className="app">
-        <Welcome timeout={5000} />
+        <Welcome timeout={7000} />
         <SearchBar setCity={handleSearchBarChange} onSearch={handleSearchBarSubmit} />
         <Routes>
           <Route
@@ -102,7 +102,7 @@ function App() {
             }
           />
          
-         <Route path="*" element={<NotFound />} />
+         {/* <Route path="*" element={<NotFound />} /> Il not found tolto per tornare indietro dopo aver cercato la città */}
         </Routes>
         <Footer />
       </div>

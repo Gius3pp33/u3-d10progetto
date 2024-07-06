@@ -1,13 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 body{
-  background-color: #202124;
+  background: rgb(188,226,227);
+background: linear-gradient(163deg, rgba(188,226,227,1) 0%, rgba(188,226,227,1) 97%);
   font-family: "Nunito", sans-serif;
   
 }
 .app {
   font-family: "Nunito", sans-serif;
-  background-color: #202124;
+  background: rgb(188,226,227);
+background: linear-gradient(163deg, rgba(188,226,227,1) 0%, rgba(188,226,227,1) 97%);
   color: #ffffff;
   padding: 20px;
 }
@@ -34,8 +36,9 @@ body{
   cursor: pointer;
 }
 
-.current-weather, .forecast, .rain-chart, .global-map {
-  background-color: #3e4042;
+.current-weather, .forecast, .rain-chart{
+  background: #062026;
+  
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -50,4 +53,17 @@ body{
   text-align: center;
 }
 
+.footer{
+  color: #062026;
+}
+.searchbar {
+  color: #062026;
 
+}
+#btn-title{
+  background-color: #062026;
+  border: #062026;
+}
+#title-page{
+  color: #062026;
+}

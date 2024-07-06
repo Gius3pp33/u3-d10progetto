@@ -15,7 +15,7 @@ function SearchBar({ setCity }) {
 
   return (
     <Container fluid >
-      <h1>EpiMeteo</h1>
+      <h1 id='title-page'>EpiMeteo</h1>
       <Container>
       <Form onSubmit={handleSubmit} className="d-flex  align-items-center justify-content-center mb-4 ">
         <Form.Group >
@@ -24,9 +24,10 @@ function SearchBar({ setCity }) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Cerca una città..."
+            required
           />
         </Form.Group>
-        <Button type="submit" className="bg-transparent border-secondary ">
+        <Button id='btn-title' type="submit" >
           Cerca
         </Button>
       </Form>

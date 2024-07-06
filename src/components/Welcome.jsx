@@ -19,8 +19,8 @@ const Welcome = ({ timeout }) => {
   }
 
   return (
-    <div className="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>Benvenuto!</strong> Questo è il miglior sito di previsioni meteo.
+    <div className="alert alert-warning alert-dismissible fade show text-center" role="alert">
+      <strong>Benvenuto!</strong> Cerca la tua città per iniziare,buona navigazione.
       <button type="button" className="btn-close" aria-label="Close" onClick={() => setShow(false)}></button>
     </div>
   );

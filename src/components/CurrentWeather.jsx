@@ -42,7 +42,7 @@ function CurrentWeather({ data }) {
           </div>
         </Col>
         <Col md={6} className="order-md-2 order-1">
-          {cityImage && <img src={cityImage} alt="Immagine della città cercata" className="city-image img-fluid" />}
+          {cityImage && <img src={cityImage} alt="Immagine della città cercata" className="city-image img-fluid " />}
         </Col>
       </Row>
     </Container>
