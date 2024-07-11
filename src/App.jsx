@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import CurrentWeather from './components/CurrentWeather';
 import Forecast from './components/Forecast';
@@ -10,10 +10,11 @@ import Error from './components/Error';
 import Welcome from './components/Welcome';
 import CityCards from './components/CityCards';
 import Footer from './components/Footer';
-import './App.css';
 import NotFound from './components/NotFound';
+import './App.css';
 
 const API_KEY = '1e3b33eb0c23931c8d2c3a6ad26d0a97';
+
 const BackIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -25,6 +26,13 @@ const BackIcon = (
   >
     <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
   </svg>
+);
+
+const Home = ({ handleSearchBarChange, handleSearchBarSubmit }) => (
+  <div>
+    <Welcome timeout={7000} />
+    <SearchBar setCity={handleSearchBarChange} onSearch={handleSearchBarSubmit} />
+  </div>
 );
 
 function App() {
@@ -71,12 +79,15 @@ function App() {
     setShowBackIcon(false);
   };
 
+  const handleCityCardClick = (cityName) => {
+    setCity(cityName);
+  };
+
   return (
     <Router>
       <div className="app">
-        <Welcome timeout={7000} />
-        <SearchBar setCity={handleSearchBarChange} onSearch={handleSearchBarSubmit} />
         <Routes>
+          <Route path="/" element={<Home handleSearchBarChange={handleSearchBarChange} handleSearchBarSubmit={handleSearchBarSubmit} />} />
           <Route
             path="/weather"
             element={
@@ -92,7 +103,7 @@ function App() {
                 {error && <Error message={error} />}
                 {weatherData && (
                   <>
-                    <CityCards />
+                    <CityCards handleSearch={handleCityCardClick} />
                     <CurrentWeather data={weatherData} />
                     <Forecast city={city} apiKey={API_KEY} />
                     <RainChart city={city} apiKey={API_KEY} />
@@ -101,8 +112,7 @@ function App() {
               </>
             }
           />
-         
-         {/* <Route path="*" element={<NotFound />} /> Il not found tolto per tornare indietro dopo aver cercato la città */}
+          <Route path="*" element={<NotFound />}/>
         </Routes>
         <Footer />
       </div>
